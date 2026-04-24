@@ -92,11 +92,14 @@ const Program = () => {
   return (
     <section id="programme" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+        <div className="text-center mb-16 relative z-10">
+          <h2 className="text-5xl sm:text-7xl font-black text-gray-900 mb-6 uppercase tracking-tight relative inline-block">
             Programme
+            <svg className="absolute -bottom-2 -left-2 w-[110%] h-4 text-blue-500 -z-10" viewBox="0 0 100 20" preserveAspectRatio="none" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round">
+              <path d="M 5 15 Q 50 5, 95 10" />
+            </svg>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto font-medium">
             Découvrez notre programme riche en conférences, workshops et panels animés par les meilleurs experts du secteur.
           </p>
         </div>
@@ -110,10 +113,10 @@ const Program = () => {
                 <button
                   key={day.id}
                   onClick={() => setSelectedDay(day.id)}
-                  className={`px-6 py-3 rounded-full font-medium transition-all duration-200 ${
+                  className={`px-6 py-3 font-bold uppercase tracking-wider transition-all duration-200 border-2 border-gray-900 rounded-none ${
                     selectedDay === day.id
-                      ? 'bg-purple-600 text-white shadow-lg transform scale-105'
-                      : 'bg-white text-gray-700 hover:bg-purple-50 hover:text-purple-600'
+                      ? 'bg-blue-500 text-white shadow-[4px_4px_0_0_#111827] -translate-y-1'
+                      : 'bg-white text-gray-900 hover:bg-gray-100'
                   }`}
                 >
                   {day.date}
@@ -127,10 +130,10 @@ const Program = () => {
                 <button
                   key={type.id}
                   onClick={() => setSelectedType(type.id)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  className={`px-4 py-2 font-bold uppercase text-sm tracking-wider transition-all duration-200 border-2 border-gray-900 rounded-none ${
                     selectedType === type.id
-                      ? 'bg-pink-600 text-white'
-                      : 'bg-white text-gray-700 hover:bg-pink-50 hover:text-pink-600'
+                      ? 'bg-green-400 text-gray-900 shadow-[4px_4px_0_0_#111827] -translate-y-1'
+                      : 'bg-white text-gray-900 hover:bg-gray-100'
                   }`}
                 >
                   {type.label}
@@ -145,7 +148,7 @@ const Program = () => {
           {filteredSessions.map((session, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              className="bg-white p-6 shadow-[8px_8px_0_0_#111827] border-4 border-gray-900 hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all duration-300"
             >
               <div className="flex flex-col md:flex-row md:items-center gap-4">
                 <div className="flex-shrink-0">
@@ -159,8 +162,8 @@ const Program = () => {
                 </div>
                 
                 <div className="flex-grow">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{session.title}</h3>
-                  <p className="text-purple-600 font-medium mb-2">{session.speaker}</p>
+                  <h3 className="text-2xl font-black uppercase tracking-tight text-gray-900 mb-2">{session.title}</h3>
+                  <p className="text-blue-600 font-bold mb-2">{session.speaker}</p>
                   <div className="flex items-center gap-1 text-gray-500">
                     <MapPin className="w-4 h-4" />
                     <span>{session.location}</span>

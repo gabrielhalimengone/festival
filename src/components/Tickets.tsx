@@ -4,6 +4,8 @@ import { Check, Star, Users, Zap } from 'lucide-react';
 const Tickets = () => {
   const [selectedTicket, setSelectedTicket] = useState<string | null>(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const tickets = [
     {
@@ -66,71 +68,87 @@ const Tickets = () => {
 
   const handleBooking = (ticketId: string) => {
     setSelectedTicket(ticketId);
+    setIsSuccess(false);
+    setIsSubmitting(false);
     setShowBookingForm(true);
   };
 
   const handleSubmitBooking = (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Merci pour votre réservation ! Vous recevrez un email de confirmation.');
-    setShowBookingForm(false);
-    setSelectedTicket(null);
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSuccess(true);
+    }, 1500);
   };
 
   return (
-    <section id="billets" className="py-20 bg-gradient-to-br from-purple-50 to-pink-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-            Billets
+    <section id="billets" className="py-32 bg-gray-50 overflow-hidden relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-24 relative inline-block mx-auto w-full">
+          <h2 className="text-5xl sm:text-7xl font-black text-gray-900 mb-6 uppercase tracking-tight">
+            Prends ta place
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Choisissez votre forfait et rejoignez-nous pour 3 jours d'innovation et d'inspiration.
+          <svg className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-24 text-green-400 -z-10 opacity-50" viewBox="0 0 200 100" preserveAspectRatio="none" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round">
+             <path d="M 20 50 C 50 10, 150 10, 180 50 C 190 80, 100 90, 50 90 C 10 90, 5 60, 20 40" />
+          </svg>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto font-medium">
+            Zéro blabla, 100% action. Choisis le pass qui correspond à ton ambition.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {tickets.map((ticket) => (
-            <div
-              key={ticket.id}
-              className={`relative bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 lg:hover:scale-105 ${
-                ticket.popular ? 'ring-4 ring-purple-500 shadow-purple-500/40 relative z-10' : ''
-              }`}
-            >
-              {ticket.popular && (
-                <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-center py-3 font-semibold">
-                  Le plus populaire
-                </div>
-              )}
-              
-              <div className={`p-8 ${ticket.popular ? 'pt-16' : ''}`}>
-                <div className="text-center mb-8">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full mb-4">
-                    <div className="text-purple-600">
-                      {ticket.icon}
-                    </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-10 mb-12 items-start">
+          {tickets.map((ticket, index) => {
+            const isPopular = ticket.popular;
+            
+            // Asymmetry styles
+            let cardTransforms = "";
+            if (index === 0) cardTransforms = "md:-rotate-2 md:translate-y-4";
+            if (index === 1) cardTransforms = "md:-translate-y-4 z-10 scale-100 md:scale-105";
+            if (index === 2) cardTransforms = "md:rotate-2 md:translate-y-12";
+            
+            // Brutalist colors
+            const bgColor = isPopular ? "bg-gray-900 text-white" : "bg-white text-gray-900";
+            const borderColor = "border-4 border-gray-900";
+            const shadowColor = isPopular ? "shadow-[8px_8px_0_0_#4ade80]" : "shadow-[8px_8px_0_0_#111827]";
+            
+            return (
+              <div
+                key={ticket.id}
+                className={`relative rounded-none transition-transform duration-300 ${bgColor} ${borderColor} ${shadowColor} ${cardTransforms} p-8`}
+              >
+                {isPopular && (
+                  <div className="absolute -top-5 -right-5 bg-green-400 text-gray-900 px-4 py-2 font-black uppercase tracking-wider transform rotate-12 border-2 border-gray-900 shadow-[4px_4px_0_0_#111827]">
+                    Le Choix Évident
+                  </div>
+                )}
+                
+                <div className="text-center mb-8 mt-4">
+                  <div className={`inline-flex items-center justify-center w-16 h-16 rounded-none border-2 border-current mb-6 ${isPopular ? 'text-green-400' : 'text-blue-600'}`}>
+                    {ticket.icon}
                   </div>
                   
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{ticket.name}</h3>
+                  <h3 className="text-3xl font-black uppercase tracking-tight mb-2">{ticket.name}</h3>
                   
-                  <div className="mb-4">
+                  <div className="mb-4 flex items-center justify-center gap-2">
                     {ticket.originalPrice && (
-                      <span className="text-gray-400 line-through text-lg mr-2">€{ticket.originalPrice}</span>
+                      <span className="text-gray-400 line-through text-xl font-bold">€{ticket.originalPrice}</span>
                     )}
-                    <span className="text-4xl font-bold text-gray-900">€{ticket.price}</span>
+                    <span className="text-5xl font-black">€{ticket.price}</span>
                   </div>
                   
                   {ticket.deadline && (
-                    <p className="text-sm text-red-600 font-medium">{ticket.deadline}</p>
+                    <p className="text-sm bg-red-500 text-white font-bold inline-block px-3 py-1 uppercase">{ticket.deadline}</p>
                   )}
                 </div>
 
-                <ul className="space-y-4 mb-8">
-                  {ticket.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-5 h-5 bg-green-100 rounded-full flex items-center justify-center mt-0.5">
-                        <Check className="w-3 h-3 text-green-600" />
+                <ul className="space-y-4 mb-10">
+                  {ticket.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <div className={`flex-shrink-0 w-6 h-6 flex items-center justify-center mt-0.5 ${isPopular ? 'text-green-400' : 'text-blue-600'}`}>
+                        <Check className="w-6 h-6 stroke-[3]" />
                       </div>
-                      <span className="text-gray-700">{feature}</span>
+                      <span className={`font-medium ${isPopular ? 'text-gray-300' : 'text-gray-700'}`}>{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -138,90 +156,114 @@ const Tickets = () => {
                 <button
                   onClick={() => handleBooking(ticket.id)}
                   disabled={!ticket.available}
-                  className={`w-full py-4 px-6 rounded-xl font-semibold text-lg transition-all duration-200 ${
-                    ticket.popular
-                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 shadow-lg'
-                      : 'bg-gray-900 text-white hover:bg-gray-800'
-                  } ${!ticket.available ? 'opacity-50 cursor-not-allowed' : 'hover:transform hover:scale-105'}`}
+                  className={`w-full py-4 px-6 font-black text-lg uppercase tracking-widest transition-all duration-200 border-2 border-gray-900 ${
+                    !ticket.available 
+                      ? 'opacity-50 cursor-not-allowed bg-gray-200 text-gray-500' 
+                      : isPopular
+                        ? 'bg-green-400 text-gray-900 shadow-[4px_4px_0_0_#fff] hover:translate-y-1 hover:translate-x-1 hover:shadow-none'
+                        : 'bg-white text-gray-900 shadow-[4px_4px_0_0_#111827] hover:translate-y-1 hover:translate-x-1 hover:shadow-none'
+                  }`}
                 >
-                  {ticket.available ? 'Réserver maintenant' : 'Épuisé'}
+                  {ticket.available ? 'Je prends ma place' : 'Sold Out'}
                 </button>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
       {/* Booking Form Modal */}
       {showBookingForm && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-none border-4 border-gray-900 shadow-[12px_12px_0_0_#111827] max-w-md w-full max-h-[90vh] overflow-y-auto">
             <div className="p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Réservation de billet</h3>
-              
-              <form onSubmit={handleSubmitBooking} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Nom complet *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="Votre nom complet"
-                  />
+              {isSuccess ? (
+                <div className="text-center py-8">
+                  <div className="w-20 h-20 bg-green-400 rounded-full border-4 border-gray-900 mx-auto flex items-center justify-center mb-6 shadow-[4px_4px_0_0_#111827]">
+                    <Check className="w-10 h-10 text-gray-900 stroke-[3]" />
+                  </div>
+                  <h3 className="text-3xl font-black uppercase tracking-tight text-gray-900 mb-4">Confirmé !</h3>
+                  <p className="text-gray-600 font-medium mb-8">
+                    Votre place est réservée. Préparez-vous pour l'événement tech de l'année. Un email de confirmation a été envoyé.
+                  </p>
+                  <button
+                    onClick={() => { setShowBookingForm(false); setSelectedTicket(null); }}
+                    className="w-full bg-blue-500 text-white font-black uppercase tracking-widest py-4 px-6 border-2 border-gray-900 shadow-[4px_4px_0_0_#111827] hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all duration-200"
+                  >
+                    Fermer
+                  </button>
                 </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="votre@email.com"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Téléphone
-                  </label>
-                  <input
-                    type="tel"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="Votre numéro de téléphone"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Entreprise
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                    placeholder="Nom de votre entreprise"
-                  />
-                </div>
+              ) : (
+                <>
+                  <h3 className="text-3xl font-black uppercase tracking-tight text-gray-900 mb-6 border-b-4 border-gray-900 pb-4">Réservation</h3>
+                  
+                  <form onSubmit={handleSubmitBooking} className="space-y-6">
+                    <div>
+                      <label className="block text-sm font-black uppercase tracking-wider text-gray-900 mb-2">
+                        Nom complet *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        className="w-full px-4 py-3 border-2 border-gray-900 rounded-none focus:outline-none focus:border-blue-500 focus:shadow-[4px_4px_0_0_#3b82f6] transition-all bg-gray-50 font-medium"
+                        placeholder="John Doe"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-black uppercase tracking-wider text-gray-900 mb-2">
+                        Email *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        className="w-full px-4 py-3 border-2 border-gray-900 rounded-none focus:outline-none focus:border-blue-500 focus:shadow-[4px_4px_0_0_#3b82f6] transition-all bg-gray-50 font-medium"
+                        placeholder="john@example.com"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-black uppercase tracking-wider text-gray-900 mb-2">
+                        Téléphone
+                      </label>
+                      <input
+                        type="tel"
+                        className="w-full px-4 py-3 border-2 border-gray-900 rounded-none focus:outline-none focus:border-blue-500 focus:shadow-[4px_4px_0_0_#3b82f6] transition-all bg-gray-50 font-medium"
+                        placeholder="+33 6 12 34 56 78"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-black uppercase tracking-wider text-gray-900 mb-2">
+                        Entreprise
+                      </label>
+                      <input
+                        type="text"
+                        className="w-full px-4 py-3 border-2 border-gray-900 rounded-none focus:outline-none focus:border-blue-500 focus:shadow-[4px_4px_0_0_#3b82f6] transition-all bg-gray-50 font-medium"
+                        placeholder="TechCorp"
+                      />
+                    </div>
 
-                <div className="flex gap-4 pt-4">
-                  <button
-                    type="button"
-                    onClick={() => setShowBookingForm(false)}
-                    className="flex-1 py-3 px-4 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    Annuler
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-1 py-3 px-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200"
-                  >
-                    Confirmer
-                  </button>
-                </div>
-              </form>
+                    <div className="flex gap-4 pt-4">
+                      <button
+                        type="button"
+                        onClick={() => setShowBookingForm(false)}
+                        disabled={isSubmitting}
+                        className="flex-1 py-4 px-4 bg-white text-gray-900 border-2 border-gray-900 shadow-[4px_4px_0_0_#111827] font-black uppercase tracking-widest hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all duration-200 disabled:opacity-50"
+                      >
+                        Annuler
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="flex-1 py-4 px-4 bg-green-400 text-gray-900 border-2 border-gray-900 shadow-[4px_4px_0_0_#111827] font-black uppercase tracking-widest hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all duration-200 disabled:opacity-50"
+                      >
+                        {isSubmitting ? 'Traitement...' : 'Valider'}
+                      </button>
+                    </div>
+                  </form>
+                </>
+              )}
             </div>
           </div>
         </div>

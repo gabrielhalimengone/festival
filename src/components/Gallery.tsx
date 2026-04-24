@@ -75,19 +75,22 @@ const Gallery = () => {
   return (
     <section id="galerie" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+        <div className="text-center mb-16 relative z-10">
+          <h2 className="text-5xl sm:text-7xl font-black text-gray-900 mb-6 uppercase tracking-tight relative inline-block">
             Galerie
+            <svg className="absolute -bottom-4 left-0 w-full h-8 text-blue-500 -z-10" viewBox="0 0 100 20" preserveAspectRatio="none" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round">
+              <path d="M 0 10 L 100 10" />
+            </svg>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Revivez les moments forts de nos précédentes éditions et découvrez l'atmosphère unique de TechFest.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto font-medium">
+            Revivez les moments forts de nos précédentes éditions et découvrez l'atmosphère brute de TechFest.
           </p>
         </div>
 
         {/* Main Carousel */}
         <div className="relative mb-12">
-          <div className="overflow-hidden rounded-2xl shadow-2xl">
-            <div className="relative aspect-[16/9] bg-gray-200">
+          <div className="overflow-hidden rounded-none border-4 border-gray-900 shadow-[12px_12px_0_0_#111827]">
+            <div className="relative aspect-[16/9] bg-gray-900">
               <img
                 src={images[currentIndex].url}
                 alt={images[currentIndex].title}
@@ -106,16 +109,16 @@ const Gallery = () => {
           {/* Navigation Buttons */}
           <button
             onClick={prevImage}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg transition-all duration-200 hover:scale-110"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white hover:bg-green-400 rounded-none border-4 border-gray-900 p-3 shadow-[6px_6px_0_0_#111827] transition-all duration-200 hover:-translate-y-1 hover:translate-x-[-2px] hover:shadow-[8px_8px_0_0_#111827]"
           >
-            <ChevronLeft className="w-6 h-6 text-gray-700" />
+            <ChevronLeft className="w-6 h-6 text-gray-900 stroke-[3]" />
           </button>
           
           <button
             onClick={nextImage}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-3 shadow-lg transition-all duration-200 hover:scale-110"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white hover:bg-green-400 rounded-none border-4 border-gray-900 p-3 shadow-[6px_6px_0_0_#111827] transition-all duration-200 hover:-translate-y-1 hover:translate-x-[2px] hover:shadow-[8px_8px_0_0_#111827]"
           >
-            <ChevronRight className="w-6 h-6 text-gray-700" />
+            <ChevronRight className="w-6 h-6 text-gray-900 stroke-[3]" />
           </button>
 
           {/* Dots Indicator */}
@@ -124,10 +127,10 @@ const Gallery = () => {
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                className={`h-4 transition-all duration-200 rounded-none border-2 border-gray-900 ${
                   index === currentIndex
-                    ? 'bg-purple-600 w-8'
-                    : 'bg-gray-300 hover:bg-gray-400'
+                    ? 'bg-blue-500 w-12 shadow-[2px_2px_0_0_#111827]'
+                    : 'bg-white w-4'
                 }`}
               />
             ))}
@@ -140,7 +143,7 @@ const Gallery = () => {
             {[...images, ...images, ...images].map((image, index) => (
               <div
                 key={index}
-                className="relative group cursor-pointer overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300 w-48 md:w-64 shrink-0"
+                className="relative group cursor-pointer overflow-hidden rounded-none border-4 border-gray-900 shadow-[6px_6px_0_0_#111827] hover:shadow-none hover:translate-y-1 hover:translate-x-1 transition-all duration-300 w-48 md:w-64 shrink-0"
                 onClick={() => openModal(image, index % images.length)}
               >
                 <div className="aspect-[4/3]">
@@ -161,32 +164,31 @@ const Gallery = () => {
         </div>
       </div>
 
-      {/* Modal */}
       {selectedImage && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
           <div className="relative max-w-4xl w-full">
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors duration-200 z-10"
+              className="absolute top-4 right-4 p-2 rounded-none border-2 border-white bg-transparent hover:bg-white hover:text-black transition-colors duration-200 z-10 text-white"
             >
-              <X className="w-6 h-6 text-white" />
+              <X className="w-6 h-6" />
             </button>
             
             <button
               onClick={prevModalImage}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors duration-200 z-10"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 p-2 rounded-none border-2 border-white bg-transparent hover:bg-white hover:text-black transition-colors duration-200 z-10 text-white"
             >
-              <ChevronLeft className="w-6 h-6 text-white" />
+              <ChevronLeft className="w-6 h-6" />
             </button>
             
             <button
               onClick={nextModalImage}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors duration-200 z-10"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 rounded-none border-2 border-white bg-transparent hover:bg-white hover:text-black transition-colors duration-200 z-10 text-white"
             >
-              <ChevronRight className="w-6 h-6 text-white" />
+              <ChevronRight className="w-6 h-6" />
             </button>
 
-            <div className="aspect-[4/3] bg-gray-900 rounded-lg overflow-hidden">
+            <div className="aspect-[4/3] bg-gray-900 border-4 border-white rounded-none overflow-hidden">
               <img
                 src={selectedImage.url}
                 alt={selectedImage.title}

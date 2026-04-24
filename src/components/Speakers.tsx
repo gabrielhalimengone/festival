@@ -74,12 +74,15 @@ const Speakers = () => {
   return (
     <section id="speakers" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+        <div className="text-center mb-16 relative z-10">
+          <h2 className="text-5xl sm:text-7xl font-black text-gray-900 mb-6 uppercase tracking-tight relative inline-block">
             Nos Speakers
+            <svg className="absolute -top-6 -right-12 w-16 h-16 text-green-400 -z-10" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M50 10 L60 40 L90 50 L60 60 L50 90 L40 60 L10 50 L40 40 Z" />
+            </svg>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Rencontrez les experts qui partageront leurs connaissances et expériences lors de TechFest 2025.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto font-medium">
+            Rencontrez les experts qui partageront leurs connaissances et expériences lors de TechFest 2026.
           </p>
         </div>
 
@@ -87,7 +90,7 @@ const Speakers = () => {
           {speakers.map((speaker) => (
             <div
               key={speaker.id}
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"
+              className="bg-white rounded-none border-4 border-gray-900 shadow-[8px_8px_0_0_#111827] overflow-hidden hover:shadow-none hover:translate-y-1 hover:translate-x-1 transition-all duration-300 cursor-pointer"
               onClick={() => openModal(speaker)}
             >
               <div className="h-64 w-full overflow-hidden">
@@ -98,19 +101,19 @@ const Speakers = () => {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{speaker.name}</h3>
-                <p className="text-purple-600 font-medium mb-4">{speaker.title}</p>
+                <h3 className="text-2xl font-black uppercase tracking-tight text-gray-900 mb-2">{speaker.name}</h3>
+                <p className="text-blue-600 font-bold mb-4">{speaker.title}</p>
                 <div className="flex flex-wrap gap-2">
                   {speaker.expertise.slice(0, 2).map((skill, index) => (
                     <span
                       key={index}
-                      className="bg-purple-100 text-purple-800 text-xs px-3 py-1 rounded-full"
+                      className="bg-green-400 text-gray-900 text-xs px-3 py-1 font-bold uppercase border-2 border-gray-900"
                     >
                       {skill}
                     </span>
                   ))}
                   {speaker.expertise.length > 2 && (
-                    <span className="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">
+                    <span className="bg-gray-100 text-gray-900 text-xs px-3 py-1 font-bold uppercase border-2 border-gray-900">
                       +{speaker.expertise.length - 2} plus
                     </span>
                   )}
@@ -124,11 +127,11 @@ const Speakers = () => {
       {/* Modal */}
       {selectedSpeaker && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-none border-4 border-gray-900 shadow-[12px_12px_0_0_#111827] max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="relative">
               <button
                 onClick={closeModal}
-                className="absolute top-4 right-4 p-4 rounded-full bg-white hover:bg-gray-100 shadow-md transition-colors duration-200 z-10 flex items-center justify-center"
+                className="absolute top-4 right-4 p-4 rounded-none border-2 border-gray-900 bg-white hover:bg-green-400 shadow-[4px_4px_0_0_#111827] transition-colors duration-200 z-10 flex items-center justify-center"
                 aria-label="Fermer la modale"
               >
                 <X className="w-5 h-5" />
@@ -143,8 +146,8 @@ const Speakers = () => {
               </div>
               
               <div className="p-8">
-                <h3 className="text-3xl font-bold text-gray-900 mb-2">{selectedSpeaker.name}</h3>
-                <p className="text-xl text-purple-600 font-medium mb-6">{selectedSpeaker.title}</p>
+                <h3 className="text-4xl font-black uppercase tracking-tight text-gray-900 mb-2">{selectedSpeaker.name}</h3>
+                <p className="text-xl text-blue-600 font-bold mb-6">{selectedSpeaker.title}</p>
                 
                 <p className="text-gray-700 mb-6 leading-relaxed">{selectedSpeaker.bio}</p>
                 
@@ -154,7 +157,7 @@ const Speakers = () => {
                     {selectedSpeaker.expertise.map((skill: string, index: number) => (
                       <span
                         key={index}
-                        className="bg-purple-100 text-purple-800 px-4 py-2 rounded-full font-medium"
+                        className="bg-green-400 text-gray-900 px-4 py-2 font-bold uppercase border-2 border-gray-900 shadow-[4px_4px_0_0_#111827]"
                       >
                         {skill}
                       </span>

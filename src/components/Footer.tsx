@@ -1,8 +1,19 @@
-import React from 'react';
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Check } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubscribing(true);
+    setTimeout(() => {
+      setIsSubscribing(false);
+      setIsSubscribed(true);
+    }, 1500);
+  };
 
   return (
     <footer className="bg-gray-900 text-white py-16">
@@ -10,12 +21,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
-              TechFest 2025
+            <h3 className="text-4xl font-black text-green-400 mb-4 uppercase tracking-tighter">
+              TechFest 2026
             </h3>
-            <p className="text-gray-300 mb-6 leading-relaxed">
+            <p className="text-gray-300 mb-6 font-medium">
               Le rendez-vous incontournable de la technologie et de l'innovation. 
-              Rejoignez-nous pour 3 jours d'inspiration et de découvertes.
+              Rejoignez-nous pour 3 jours de création brute.
             </p>
             <div className="flex space-x-4">
               {[
@@ -28,9 +39,9 @@ const Footer = () => {
                   key={name}
                   href="#"
                   aria-label={`Visiter notre page ${name}`}
-                  className="p-2 bg-gray-800 rounded-full hover:bg-purple-600 transition-colors duration-200 hover:-translate-y-1 transform"
+                  className="p-3 border-2 border-gray-700 hover:border-green-400 hover:text-green-400 bg-transparent transition-colors duration-200"
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className="w-6 h-6" />
                 </a>
               ))}
             </div>
@@ -38,7 +49,7 @@ const Footer = () => {
 
           {/* Navigation */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Navigation</h4>
+            <h4 className="text-xl font-black uppercase tracking-wider mb-6">Navigation</h4>
             <ul className="space-y-3">
               {[
                 { name: 'Accueil', href: '#hero' },
@@ -50,7 +61,7 @@ const Footer = () => {
                 <li key={item.name}>
                   <a
                     href={item.href}
-                    className="text-gray-300 hover:text-purple-400 transition-colors duration-200"
+                    className="text-gray-300 hover:text-green-400 font-medium uppercase text-sm tracking-widest transition-colors duration-200"
                     onClick={(e) => {
                       e.preventDefault();
                       const element = document.getElementById(item.href.slice(1));
@@ -66,45 +77,60 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Contact</h4>
+            <h4 className="text-xl font-black uppercase tracking-wider mb-6">Contact</h4>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-purple-400 mt-1 flex-shrink-0" />
+                <MapPin className="w-6 h-6 text-blue-500 mt-1 flex-shrink-0" />
                 <div>
-                  <p className="text-gray-300">Palais des Congrès</p>
-                  <p className="text-gray-300">2 Place de la Porte Maillot</p>
-                  <p className="text-gray-300">75017 Paris, France</p>
+                  <p className="text-gray-300 font-medium">Palais des Congrès</p>
+                  <p className="text-gray-300 font-medium">2 Place de la Porte Maillot</p>
+                  <p className="text-gray-300 font-medium">75017 Paris, France</p>
                 </div>
               </div>
               
               <div className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-purple-400 flex-shrink-0" />
-                <p className="text-gray-300">+33 1 40 68 22 22</p>
+                <Phone className="w-6 h-6 text-blue-500 flex-shrink-0" />
+                <p className="text-gray-300 font-medium">+33 1 40 68 22 22</p>
               </div>
               
               <div className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-purple-400 flex-shrink-0" />
-                <p className="text-gray-300">info@techfest2025.fr</p>
+                <Mail className="w-6 h-6 text-blue-500 flex-shrink-0" />
+                <p className="text-gray-300 font-medium">info@techfest2026.fr</p>
               </div>
             </div>
           </div>
 
           {/* Newsletter */}
           <div>
-            <h4 className="text-lg font-semibold mb-6">Newsletter</h4>
-            <p className="text-gray-300 mb-4">
-              Restez informé des dernières actualités et annonces.
-            </p>
-            <div className="space-y-3">
-              <input
-                type="email"
-                placeholder="Votre adresse email"
-                className="w-full px-4 py-3 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none transition-colors duration-200"
-              />
-              <button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-4 rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 font-medium">
-                S'abonner
-              </button>
-            </div>
+            <h4 className="text-xl font-black uppercase tracking-wider mb-6">Newsletter</h4>
+            {isSubscribed ? (
+              <div className="bg-green-400 p-6 border-2 border-green-400 text-gray-900 flex flex-col items-center justify-center text-center">
+                <Check className="w-10 h-10 mb-2 stroke-[3]" />
+                <p className="font-black uppercase tracking-widest text-lg">Abonné !</p>
+                <p className="font-medium text-sm mt-2">Préparez-vous à recevoir du lourd.</p>
+              </div>
+            ) : (
+              <>
+                <p className="text-gray-300 mb-4 font-medium">
+                  Restez informé des dernières actualités et annonces.
+                </p>
+                <form onSubmit={handleSubscribe} className="space-y-3">
+                  <input
+                    type="email"
+                    required
+                    placeholder="Votre adresse email"
+                    className="w-full px-4 py-3 bg-black text-white border-2 border-gray-700 focus:border-green-400 focus:outline-none transition-colors duration-200 rounded-none font-medium placeholder-gray-500"
+                  />
+                  <button 
+                    type="submit"
+                    disabled={isSubscribing}
+                    className="w-full bg-blue-500 text-white py-3 px-4 font-black uppercase tracking-widest border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-200 disabled:opacity-50"
+                  >
+                    {isSubscribing ? 'Inscription...' : 'S\'abonner'}
+                  </button>
+                </form>
+              </>
+            )}
           </div>
         </div>
 
@@ -118,7 +144,7 @@ const Footer = () => {
                 <a
                   key={item}
                   href="#"
-                  className="text-gray-400 hover:text-purple-400 text-sm transition-colors duration-200"
+                  className="text-gray-400 hover:text-white uppercase font-bold text-xs tracking-widest transition-colors duration-200"
                 >
                   {item}
                 </a>
