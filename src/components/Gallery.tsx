@@ -83,7 +83,7 @@ const Gallery = () => {
             </svg>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto font-medium">
-            Revivez les moments forts de nos précédentes éditions et découvrez l'atmosphère brute de TechFest.
+            Ce que les photos ne capturent pas vraiment — mais on essaie quand même. Retour sur les éditions précédentes de TechFest.
           </p>
         </div>
 

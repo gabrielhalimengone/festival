@@ -86,14 +86,12 @@ const Tickets = () => {
     <section id="billets" className="py-32 bg-gray-50 overflow-hidden relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-24 relative inline-block mx-auto w-full">
-          <h2 className="text-5xl sm:text-7xl font-black text-gray-900 mb-6 uppercase tracking-tight">
-            Prends ta place
+          <h2 className="text-5xl sm:text-7xl font-black text-gray-900 mb-6 uppercase tracking-tight relative inline-block group">
+            <span className="relative z-10">Prends ta place</span>
+            <span className="absolute bottom-2 left-0 w-full h-6 bg-green-400/30 -z-10 transform -rotate-1 transition-transform duration-300 group-hover:rotate-0 group-hover:h-8"></span>
           </h2>
-          <svg className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-24 text-green-400 -z-10 opacity-50" viewBox="0 0 200 100" preserveAspectRatio="none" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round">
-             <path d="M 20 50 C 50 10, 150 10, 180 50 C 190 80, 100 90, 50 90 C 10 90, 5 60, 20 40" />
-          </svg>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto font-medium">
-            Zéro blabla, 100% action. Choisis le pass qui correspond à ton ambition.
+            Trois formules, un seul festival. Les prix montent le 1er Mai —<br /> c'est maintenant.
           </p>
         </div>
 

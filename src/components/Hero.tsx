@@ -34,6 +34,20 @@ const Hero = () => {
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const fullText = "Oubliez les conférences ennuyeuses. 3 jours de code, de vraies rencontres et de projets qui démarrent — avec 5 000 passionnés de tech.";
+  const [displayedText, setDisplayedText] = useState("");
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (index < fullText.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev + fullText[index]);
+        setIndex(prev => prev + 1);
+      }, 30);
+      return () => clearTimeout(timeout);
+    }
+  }, [index]);
+
   return (
     <section id="hero" className="min-h-screen relative overflow-hidden flex items-center justify-center bg-gray-900">
       {/* Background Image & Overlays */}
@@ -51,17 +65,18 @@ const Hero = () => {
           <div className="text-left max-w-2xl animate-fade-in relative z-10">
             <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-[0.9] text-white mb-6">
               Hacker <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 relative">
+              <span className="relative inline-block">
                 l'Avenir
                 {/* Handmade circle SVG */}
-                <svg className="absolute -inset-4 w-[120%] h-[120%] text-green-400 opacity-60 -z-10" viewBox="0 0 200 100" preserveAspectRatio="none" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                <svg className="absolute -inset-x-6 -inset-y-3 w-[calc(100%+3rem)] h-[calc(100%+1.5rem)] text-green-400 opacity-80 -z-10" viewBox="0 0 200 100" preserveAspectRatio="none" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
                   <path d="M 10 50 C 30 10, 170 10, 190 50 C 200 80, 150 90, 100 90 C 40 90, 0 60, 20 30" />
                 </svg>
               </span>
             </h1>
             
-            <p className="text-xl sm:text-2xl mb-8 opacity-90 text-gray-200 font-medium">
-              Oubliez les conférences ennuyeuses. 3 jours de code, de création et d'innovation brute avec la communauté tech la plus vibrante d'Europe.
+            <p className="text-xl sm:text-2xl mb-8 text-gray-200 font-mono min-h-[4rem]">
+              {displayedText}
+              <span className="animate-pulse inline-block w-3 h-6 bg-green-400 ml-1 align-middle"></span>
             </p>
             
             <div className="flex flex-wrap items-center gap-6 mb-12 text-lg text-white">
@@ -94,7 +109,7 @@ const Hero = () => {
              <div className="text-[8rem] md:text-[12rem] font-black text-white leading-none tracking-tighter opacity-90 drop-shadow-2xl">
                 J-{timeLeft.days}
              </div>
-             <div className="absolute top-0 -right-4 md:-right-10 bg-blue-600 text-white font-bold py-2 px-6 transform rotate-12 uppercase tracking-widest text-sm md:text-base border-2 border-white shadow-[4px_4px_0_0_#fff]">
+             <div className="absolute top-0 -right-4 md:-right-10 bg-green-400 text-gray-900 font-black py-2 px-6 transform rotate-12 uppercase tracking-widest text-sm md:text-base border-2 border-gray-900 shadow-[4px_4px_0_0_#000]">
                 TechFest 2026
              </div>
           </div>

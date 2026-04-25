@@ -100,7 +100,7 @@ const Program = () => {
             </svg>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto font-medium">
-            Découvrez notre programme riche en conférences, workshops et panels animés par les meilleurs experts du secteur.
+            40+ sessions sur l'IA, le design, la cybersécurité et le futur du produit. Filtrez par thème, construisez votre propre parcours.
           </p>
         </div>
 

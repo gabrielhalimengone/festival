@@ -82,7 +82,7 @@ const Speakers = () => {
             </svg>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto font-medium">
-            Rencontrez les experts qui partageront leurs connaissances et expériences lors de TechFest 2026.
+            Des gens qui font, pas juste qui parlent. CTOs, fondateurs, designers et chercheurs qui bossent sur ce qui arrive vraiment.
           </p>
         </div>
 

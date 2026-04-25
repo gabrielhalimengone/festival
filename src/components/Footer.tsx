@@ -25,7 +25,7 @@ const Footer = () => {
               TechFest 2026
             </h3>
             <p className="text-gray-300 mb-6 font-medium">
-              Le rendez-vous incontournable de la technologie et de l'innovation. 
+              Fait avec amour par des gens qui auraient voulu ce festival bien avant.
               Rejoignez-nous pour 3 jours de création brute.
             </p>
             <div className="flex space-x-4">
@@ -112,7 +112,7 @@ const Footer = () => {
             ) : (
               <>
                 <p className="text-gray-300 mb-4 font-medium">
-                  Restez informé des dernières actualités et annonces.
+                  On n'envoie pas de spam. Juste les vraies infos quand elles arrivent — nouveaux speakers, ouverture des inscriptions, et quelques surprises.
                 </p>
                 <form onSubmit={handleSubscribe} className="space-y-3">
                   <input
